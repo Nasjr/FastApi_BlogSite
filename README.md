@@ -1,6 +1,8 @@
 # Blog Website backend Using Fastapi
 
 
+![Screenshot](https://github.com/Nasjr/FastApi_BlogSite/blob/main/assets/Swagger_operations.PNG)
+
 
 
 ## This Repo is an implementation of a user based Blog site Backend using :
@@ -30,3 +32,18 @@
 ### Fast and Scalable:
 - Developed using FastAPI for high performance and efficiency. []
 - Built with scalability in mind, ready for future growth. You Can use a Different DataBase for Scalability [x]
+
+> [!NOTE]
+> Useful information that users should know, even when skimming content.
+
+> [!TIP]
+> Helpful advice for doing things better or more easily.
+
+> [!IMPORTANT]
+> Key information users need to know to achieve their goal.
+
+> [!WARNING]
+> Urgent info that needs immediate user attention to avoid problems.
+
+> [!CAUTION]
+> Advises about risks or negative outcomes of certain actions.
