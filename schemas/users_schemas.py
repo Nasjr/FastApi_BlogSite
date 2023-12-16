@@ -6,16 +6,16 @@ from pydantic import BaseModel
 
 
 # this will be in the api function
-class Role(str,Enum):
+class Role(Enum):
     Admin = 'Admin'
-    user = "User"
+    User = "User"
 
 
 class UserBase(BaseModel):
     username:str
     email:str
     password:str
-    role: Optional[Role] = Role.Admin
+    role: Optional[Role] = Role.User
 
 
 
@@ -31,6 +31,7 @@ class UserDisplay(BaseModel):
     id:int
     username:str
     email:str
+    role: Role
     userBlogs : List[UserBlog] = []
     class Config():
         orm_mode = True

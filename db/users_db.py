@@ -17,7 +17,7 @@ def get_user_by_username(user_name:str,db:Session):
     return user
 
 def create_user(request:UserBase,db:Session):
-    new_user = DbUser(username=request.username,password=hash.get_hashed_password(request.password),email=request.email)
+    new_user = DbUser(username=request.username,password=hash.get_hashed_password(request.password),email=request.email,role=request.role)
     db.add(new_user)
     db.commit()
     db.refresh(new_user) 
@@ -34,7 +34,7 @@ def update_user(id:int,request:UserBase,db:Session):
     return {'message':f'updated user With id {id}'}
 
 def delete_user_by_id(id:int,db:Session):
-    user = db.query(DbUser),filter(DbUser.id == id).first()
-    db.delete(user)
+    user = db.query(DbUser).filter(DbUser.id == id)
+    user.delete()
     db.commit()
     return {'message':f'deleted user With id {id}'}

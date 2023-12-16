@@ -15,7 +15,6 @@ router = APIRouter(tags=['authentication'])
 def get_token(request:OAuth2PasswordRequestForm = Depends(),db:Session = Depends(get_db)):
 
     user = db.query(DbUser).filter(DbUser.username == request.username).first()
-    print(request.username,request.password)
     if not user:
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND,detail = 'Invalid Credentials')
     if not verify_hashed_password(request.password,user.password):

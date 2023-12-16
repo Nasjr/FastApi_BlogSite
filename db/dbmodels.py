@@ -1,10 +1,11 @@
-from enum import Enum
-from sqlalchemy import Column, DateTime, Integer,String
+from sqlalchemy import Column, DateTime, Integer,String,Enum
 from db.database import Base
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from sqlalchemy.sql.sqltypes import Integer, String, Boolean, DateTime
 from sqlalchemy.sql import func
+
+from schemas.users_schemas import Role
 
 
 class DbBlog(Base):
@@ -28,6 +29,6 @@ class DbUser(Base):
   username = Column(String)
   email = Column(String)
   password = Column(String)
-  role = Column(String)
+  role = Column(Enum(Role), default="User")
   items = relationship('DbBlog', back_populates='user',passive_deletes=True)
 

@@ -26,9 +26,11 @@ def create_blog(request: BlogBase , db : Session , curr_user_id:int):
 
 def delete_blog(id : int,db : Session):
     try:
-        new_blog = db.delete.filter(DbBlog.id == id).first()
+        new_blog = db.query(DbBlog).filter(DbBlog.id == id)
     except: 
         raise HTTPException(status_code = status.HTTP_404_NOT_FOUND,detail=f"The blog with id {id} as not found")
+    new_blog.delete()
+    db.commit()
     return new_blog
 
 def update_blog(id:int , request: BlogBase, db:Session, creator_id:int):
