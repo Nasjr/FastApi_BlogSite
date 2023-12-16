@@ -40,7 +40,7 @@ def create_blogs(blog_request : BlogBase, db : Session = Depends(get_db), curren
         'current_user':current_user
         }
 
-
+unnesassary
 @router.put('/{id}')
 def update_blog_by_id(id:int,updated_blog : BlogDisplay,db : Session = Depends(get_db), curr_user: UserDisplay = Depends(get_curr_user)):
         curr_blog = blogs_db.get_blog_by_id(id,db)

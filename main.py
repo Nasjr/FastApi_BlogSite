@@ -1,4 +1,4 @@
-# E:\Courses\Python\BlogApi\blogenv\Scripts\activate.bat
+# E:\Courses\Python\BlogApi\blogapivenv\Scripts\activate.bat 
 from fastapi import FastAPI
 from db import dbmodels
 from db.database import engine, Sessionlocal

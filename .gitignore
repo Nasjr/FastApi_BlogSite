@@ -1,3 +1,4 @@
-blogenv/
+blogapivenv/
 __pycache__/
 */__pycache__/
+*.db
