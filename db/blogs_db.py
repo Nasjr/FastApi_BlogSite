@@ -16,7 +16,7 @@ def get_blog_by_id(id :int, db : Session):
 
 def create_blog(request: BlogBase , db : Session , curr_user_id:int):
     try:
-        new_blog = DbBlog(title = request.title, content = request.content,creator_id = curr_user_id)
+        new_blog = DbBlog(title = request.title, content = request.content,creator_id = curr_user_id,image_url=request.image_path)
         db.add(new_blog)
         db.commit()
         db.refresh(new_blog)

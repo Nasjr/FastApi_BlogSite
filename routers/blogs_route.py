@@ -1,5 +1,6 @@
-from fastapi import APIRouter, HTTPException, Query , Body , Path
-from typing import List, Union
+from uuid import uuid4
+from fastapi import APIRouter, Form, HTTPException, Query , Body , Path, File,UploadFile
+from typing import List, Optional, Union
 from fastapi import Depends,status,Response
 
 from auth.Oauth2 import get_curr_user
@@ -9,12 +10,12 @@ from db import blogs_db
 from sqlalchemy.orm import Session
 
 from schemas.users_schemas import Role, UserBase, UserDisplay
-
+import shutil
 
 router = APIRouter(prefix = '/blog',tags = ['blogs'])
 
 @router.get('/all',status_code=status.HTTP_200_OK)
-def get_all_blogs( response : Response,db : Session = Depends(get_db), curr_user: UserDisplay = Depends(get_curr_user)):
+def get_all_blogs(response : Response,db : Session = Depends(get_db), curr_user: UserDisplay = Depends(get_curr_user)):
     blogs = blogs_db.get_all_blogs(db)
     if len(blogs) == 0 :
         response.status_code = status.HTTP_404_NOT_FOUND
@@ -33,11 +34,27 @@ def get_blog_by_id(id:int,db : Session = Depends(get_db), curr_user: UserDisplay
 #     return blogs_db.create_blog(request,db)    
 
 @router.post('/new/blog')
-def create_blogs(blog_request : BlogBase, db : Session = Depends(get_db), current_user: UserBase = Depends(get_curr_user)):
+async def create_blogs(title : str,
+    content : str,
+    published : Optional[bool] = False,
+    db : Session = Depends(get_db),
+    current_user: UserDisplay = Depends(get_curr_user),
+    blog_image: UploadFile = File(...)):
+
+    # """You cannot send data using Models because it uses 
+    # it as a json and this is an http method 
+    # that takes only 1 json and send it not 2 jsons"""
+
+    file_path = f'images/{uuid4()}-{blog_image.filename}'
+    with open(file_path,'w+b') as file:
+        shutil.copyfileobj(blog_image.file,file)
+
+    blog_request = BlogBase(title=title,content=content,creator_id=current_user.id,image_path=file_path,published=published)
     new_blog = blogs_db.create_blog(blog_request,db,curr_user_id=current_user.id)   
     return {
         'data':new_blog,
-        'current_user':current_user
+        'current_user': current_user,
+        'image':blog_image.filename
         }
 
 

@@ -9,6 +9,7 @@ class BlogBase(BaseModel):
     content : str
     published : Optional[bool] = False
     creator_id: Optional[int]
+    image_path: Optional[str] = 'NA'
 
 class BlogDisplay(BaseModel):
     title: str
